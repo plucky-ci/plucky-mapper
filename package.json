@@ -1,6 +1,6 @@
 {
   "name": "plucky-mapper",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "json reference mapping for configuration",
   "main": "./src/jsonmapper.js",
   "directories": {
