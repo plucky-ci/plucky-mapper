@@ -1,32 +1,29 @@
 const jsonMapper = (obj, config) => {
-  let objString = JSON.stringify(obj);
-  const regex = /\${(.*?)}/g;
-  let matches;
-  let flattenedConfig = flattenObject(config);
-  while((matches = regex.exec(objString)) !== null) {
-    const token = matches[0];
-    const key = matches[1];
-    const value = flattenedConfig[key];
-    if(typeof(value)==='object'||Array.isArray(value)){
-      const strValue = JSON.stringify(value);
-      objString = objString.replace(`"${token}"`, strValue);
-      continue;
-    }
-    objString = objString.replace(token, value);
-  }
+	let newObj = {};
+	return getSanitizeObject(obj, flattenObject(config), newObj);
+};
 
-  return JSON.parse(objString, function(k, v) {
-    if(!isNaN(parseFloat(v))) {
-      return parseFloat(v);
-    }
-    if(v === 'true' || v === 'True') {
-      return true;
-    }
-    if(v === 'false' || v === 'False') {
-      return false;
-    }
-    return v;
-  });
+const getSanitizeObject = (obj, config, newObj) => {
+	const regex = /\${(.*?)}/;
+	for(let i in obj) {
+		if(typeof obj[i] === 'object') {
+			newObj[i] = {};
+			getSanitizeObject(obj[i], config, newObj[i]);
+		} else {
+			if(typeof obj[i] !== 'string') {
+				newObj[i] = obj[i];
+			} else {
+				if(!obj[i].match(regex)) {
+					newObj[i] = obj[i];
+				} else {
+					const tokenReplace = regex.exec(obj[i]);
+					newObj[i] = config[tokenReplace[1]];
+				}
+			}
+		}
+	}
+
+	return newObj;
 };
 
 const flattenObject = (ob) => {

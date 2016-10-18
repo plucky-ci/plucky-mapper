@@ -104,4 +104,22 @@ describe('jsonMapper', ()=>{
 
     done();
   });
+
+  it('should replace tokenized string with an array', (done)=>{
+    const config = {
+      foo: {
+        bar: [1, 2]
+      }
+    };
+    const obj = {
+      foo: "${foo.bar}"
+    };
+
+    const newObj = jsonMapper(obj, config);
+    expect(newObj.foo).to.be.an.array();
+    expect(newObj.foo.length).to.equal(2);
+    expect(newObj.foo[0]).to.equal(1);
+    expect(newObj.foo[1]).to.equal(2);
+    done();
+  });
 });
