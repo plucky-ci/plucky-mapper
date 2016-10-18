@@ -17,7 +17,7 @@
     "mapper",
     "json"
   ],
-  "author": "Hung Chen",
+  "author": "Hung Chen <hung.chen.ucf@gmail.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/plucky-ci/plucky-mapper/issues"
