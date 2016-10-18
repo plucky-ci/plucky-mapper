@@ -122,4 +122,30 @@ describe('jsonMapper', ()=>{
     expect(newObj.foo[1]).to.equal(2);
     done();
   });
+
+  it('should replace tokens from itself', (done) => {
+    const config = {
+      foo: {
+        bar: {
+          fun: 10
+        }
+      },
+      jenkins: {
+        "auth": "qwer"
+      }
+    };
+    const obj = {
+      foo: "${foo.bar}",
+      params: {
+        "auth": "asdf"
+      },
+      jenkins: {
+        "auth": "${params.auth}"
+      }
+    };
+    const newObj = jsonMapper(obj, config);
+    expect(newObj.jenkins.auth).to.equal(obj.params.auth);
+   
+    done();
+  })
 });

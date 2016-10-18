@@ -1,6 +1,6 @@
 const jsonMapper = (obj, config) => {
 	let newObj = {};
-	return getSanitizeObject(obj, flattenObject(config), newObj);
+	return getSanitizeObject(obj, flattenObject(extend(obj, config)), newObj);
 };
 
 const getSanitizeObject = (obj, config, newObj) => {
@@ -24,6 +24,35 @@ const getSanitizeObject = (obj, config, newObj) => {
 	}
 
 	return newObj;
+};
+
+const extend = (...args)=>{
+  if(!args.length){
+    return {};
+  }
+  return args.reduce((res, arg)=>{
+    if(!res){
+      return arg;
+    }
+    if(Array.isArray(res)){
+      return [...res, ...(Array.isArray(arg)?arg:[arg])];
+    }
+    if(Array.isArray(arg)){
+      return [res, ...arg];
+    }
+    const rType = typeof(res);
+    const aType = typeof(arg);
+    if(rType !== 'object'){
+      return arg;
+    }
+    if(aType !== 'object'){
+      return [res, arg];
+    }
+    return Object.keys(arg).reduce((res, key)=>{
+      return Object.assign({}, res, {[key]: extend(res[key], arg[key])});
+    }, res);
+  });
+  return Object.assign({}, ...args);
 };
 
 const flattenObject = (ob) => {
@@ -53,5 +82,6 @@ const flattenObject = (ob) => {
 
 module.exports = {
   jsonMapper,
-  flattenObject
+  flattenObject,
+  extend
 };
