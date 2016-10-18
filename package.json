@@ -23,7 +23,7 @@
     "url": "https://github.com/plucky-ci/plucky-mapper/issues"
   },
   "homepage": "https://github.com/plucky-ci/plucky-mapper#readme",
-  "dependencies": {
+  "devDependencies": {
     "code": "^4.0.0",
     "lab": "^11.1.0"
   }

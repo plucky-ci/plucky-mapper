@@ -84,4 +84,24 @@ describe('jsonMapper', ()=>{
 
     done();
   });
+
+  it('should replace tokenized string with an object', (done)=>{
+    const config = {
+      foo: {
+        bar: {
+          fun: 10
+        }
+      }
+    };
+    const obj = {
+      foo: "${foo.bar}"
+    };
+
+    const newObj = jsonMapper(obj, config);
+
+    expect(newObj).to.be.an.object();
+    expect(newObj.foo).to.be.an.object().and.to.equal(config.foo.bar);
+
+    done();
+  });
 });
