@@ -6,8 +6,8 @@ const jsonMapper = (obj, config) => {
 const getSanitizeObject = (obj, config, newObj) => {
 	const regex = /\${(.*?)}/;
 	for(let i in obj) {
-		if(typeof obj[i] === 'object') {
-			newObj[i] = {};
+		if(typeof obj[i] === 'object' || Array.isArray(obj[i])) {
+			newObj[i] = Array.isArray(obj[i]) ? [] : {};
 			getSanitizeObject(obj[i], config, newObj[i]);
 		} else {
 			if(typeof obj[i] !== 'string') {

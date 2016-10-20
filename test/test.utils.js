@@ -147,5 +147,21 @@ describe('jsonMapper', ()=>{
     expect(newObj.jenkins.auth).to.equal(obj.params.auth);
    
     done();
-  })
+  });
+
+  it('should return an array and not an object', (done) => {
+    const config = {
+    };
+
+    const obj = {
+      foo: [1, 2]
+    };
+
+    const newObj = jsonMapper(obj, config);
+    expect(newObj.foo).to.be.an.array();
+    expect(newObj.foo.length).to.equal(2);
+    expect(newObj.foo[0]).to.equal(1);
+    expect(newObj.foo[1]).to.equal(2);
+    done();
+  });
 });
