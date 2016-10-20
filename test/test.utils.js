@@ -149,14 +149,13 @@ describe('jsonMapper', ()=>{
     done();
   });
 
-  it('should return an array and not an object', (done) => {
+  it('should return the original array and not an object', (done) => {
     const config = {
     };
 
     const obj = {
       foo: [1, 2]
     };
-
     const newObj = jsonMapper(obj, config);
     expect(newObj.foo).to.be.an.array();
     expect(newObj.foo.length).to.equal(2);
