@@ -163,4 +163,18 @@ describe('jsonMapper', ()=>{
     expect(newObj.foo[1]).to.equal(2);
     done();
   });
+
+  it('should return the original token if the token cannot be found', (done) => {
+    const config = {
+    };
+
+    const obj = {
+      foo: "${global.config}"
+    };
+    const newObj = jsonMapper(obj, config);
+    expect(newObj.foo).to.be.a.string();
+    expect(newObj.foo).to.equal('${global.config}');
+    
+    done();
+  });
 });

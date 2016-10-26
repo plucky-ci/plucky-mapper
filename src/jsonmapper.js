@@ -17,7 +17,14 @@ const getSanitizeObject = (obj, config, newObj) => {
 					newObj[i] = obj[i];
 				} else {
 					const tokenReplace = regex.exec(obj[i]);
-					newObj[i] = config[tokenReplace[1]];
+          if(tokenReplace.length > 1 && config[tokenReplace[1]] !== undefined) {
+            newObj[i] = config[tokenReplace[1]];
+          } else {
+            // keep it...that means it couldnt find a replacement
+            // which means it maybe a UI token replacement
+            newObj[i] = obj[i];
+          }
+					
 				}
 			}
 		}
