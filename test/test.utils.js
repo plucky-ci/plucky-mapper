@@ -177,4 +177,19 @@ describe('jsonMapper', ()=>{
     
     done();
   });
+
+  it('should return fill in the token that is inside the array', (done) => {
+    const config = {
+      test: 'value'
+    };
+
+    const obj = {
+      foo: ['string', '${test}']
+    };
+    const newObj = jsonMapper(obj, config);
+    expect(newObj.foo.length).to.be.a.equal(2);
+    expect(newObj.foo[1]).to.equal('value');
+    
+    done();
+  });
 });
